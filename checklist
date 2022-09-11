@@ -1,0 +1,42 @@
+create a player   x
+shoot projectiles x
+create enemies x
+detect collection // projectile hit, player hit x
+remove off screen projectiles x
+colorize game x
+shrink enemies on hit x
+create particle explosion on hit x
+add score x
+more accurate object removal x
+add game over UI x
+add restart button x
+add start game button x
+ui animations
+
+
+player movement x
+homing enemies x
+spinning enemies x
+homing-spinning enemies x
+power ups x
+dynamic score labels x
+interactive background particles x
+sound effects x
+background music x
+mute button x
+screen resizing x
+mobile events and performance x
+revisit setInterval x
+deployment
+
+// itch.io for assets
+// howler audio
+// heroicons
+
+// 19 tracks of 8 Bit Royalty Free Music!
+// Bit By Bit Bert
+
+
+// Basic game 8-bit game sound effects
+
+// rvs screen resizing

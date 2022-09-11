@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Canvas Shooter</title>
+    <style>
+
+        * {
+            /* pinching or zooming */
+            touch-action: none;  
+        }
+
+
+        body{
+            margin: 0;
+            font-family: sans-serif;
+            background-color: black;
+        }
+
+        .score__wrapper{
+            position: absolute;
+            color: white;
+            padding: 30px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            user-select: none;
+        }
+
+
+        .game__over__wrapper{
+            display: none;
+            position: absolute;
+            background-color: white;
+            top: 50%;
+            transform: translate(-50%, -50%); 
+            left: 50%;
+            padding: 16px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        @media screen and (max-width: 700px) {
+            .game__over__wrapper{
+                max-width: 230px;
+            } 
+        }
+
+        .grey{
+            color: grey;
+        }
+
+        .game__over{
+            font-size: 16px;
+        }
+
+        .game__score{
+            font-size: 48px;
+            margin-bottom: 0;
+        }
+
+        .game__over__label{
+            margin: 0;
+            font-size: 14px;
+        }
+
+
+        .restart__button{
+            margin-top: 24px;
+            padding: 8px 12px;
+            border: none;
+            background-color: #1199fa;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .game__start__wrapper{
+            display: block;
+            position: absolute;
+            background-color: white;
+            top: 50%;
+            transform: translate(-50%, -50%); 
+            left: 50%;
+            padding: 16px;
+            max-width: 230px;
+            width: 100%;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .game__score{
+            font-size: 48px;
+            margin-bottom: 0;
+        }
+
+        .game__start__label{
+            margin: 0;
+            font-size: 14px;
+        }
+
+
+        .restart__button{
+            margin-top: 24px;
+            padding: 8px 12px;
+            border: none;
+            background-color: #1199fa;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+
+        /* Translate moves from the width of the shape itself */
+
+    </style>
+</head>
+<body>
+
+<div class="score__wrapper">
+<span class="score">Score:</span> <p id="score">0</p>
+</div>
+
+<div style="position: absolute; top: 0; right: 0; width: 14px; height: 14px; padding: 50px 10px; cursor: pointer"  >
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" id="volumeup">
+    <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM18.584 5.106a.75.75 0 011.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 11-1.06-1.06 8.25 8.25 0 000-11.668.75.75 0 010-1.06z" />
+    <path d="M15.932 7.757a.75.75 0 011.061 0 6 6 0 010 8.486.75.75 0 01-1.06-1.061 4.5 4.5 0 000-6.364.75.75 0 010-1.06z" />
+  </svg>
+
+
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="display: none" id="volumedown">
+    <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM17.78 9.22a.75.75 0 10-1.06 1.06L18.44 12l-1.72 1.72a.75.75 0 001.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 101.06-1.06L20.56 12l1.72-1.72a.75.75 0 00-1.06-1.06l-1.72 1.72-1.72-1.72z" />
+  </svg>
+  
+
+</div>
+  
+
+<div class="game__over__wrapper" id="restart__wrapper">
+    <label class="game__over grey">Game over</label>
+
+    <span class="game__score__wrapper">
+        <h1 class="game__score" id="points">0</h1>
+        <p class="game__over__label grey">Points</p>
+    </span>
+
+    <p style="color: grey; font-size: 12px">Better luck next time lmao</p>
+
+    
+    <button class="restart__button" id="restart__button">Restart game</button>
+</div>
+
+<div class="game__start__wrapper" id="start__wrapper">
+    <h1 class="game__start grey">Timothy's space shooter</h1>
+    
+
+    <br>
+
+    <p style="color: grey; font-size: 12px">This is v1, any bug you notice is a feature.
+        <br>
+        <3 Planet maarv</p>
+    
+    <button class="restart__button" id="start__button">Start game</button>
+</div>
+
+
+
+<canvas></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js" integrity="sha512-IQLehpLoVS4fNzl7IfH8Iowfm5+RiMGtHykgZJl9AWMgqx0AmJ6cRWcB+GaGVtIsnC4voMfm8f2vwtY+6oPjpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="./js/audio.js"></script>
+<script src="./js/classes.js"></script>
+<script src="./main.js"></script>
+</body>
+</html>
